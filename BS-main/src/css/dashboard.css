@@ -1,0 +1,90 @@
+.header{
+    display: grid;
+    grid-template-columns: 90% 10%;
+}
+
+h2{
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 15px;
+}
+.headimg img{
+    width: 50px;
+    padding-top: 12px;
+}
+
+.header button{
+    margin-top: 30px;
+}
+
+.dashboardFilter{
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.dashboardFilter select{
+  margin-right: 10px;
+  padding: 6px;
+  padding-right: 20px;
+  border-radius: 5px;
+}
+
+.productSalesDisplay{
+  display: flex;
+}
+
+.detailedDisplayFilter{
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.detailedDisplayFilter select{
+  margin-right: 10px;
+  padding: 6px;
+  padding-right: 20px;
+  border-radius: 5px;
+}
+
+.productItem{
+  background-color: black;
+  color: white;
+  margin: 10px;
+  text-align: center;
+  border-radius: 10px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.productDetailDisplayItem table, .productDetailDisplayItem tr, .productDetailDisplayItem th, .productDetailDisplayItem td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+.productSalesDetailDisplay{
+  margin: 10px;
+}
+
+.productItem p{
+  font-size: 24px;
+}
+
+@media (max-width: 600px) {
+  .header{
+    width: 100%;
+    text-align: center;
+  }
+
+  .dashboardFilter{
+    flex-direction: column;
+  }
+
+  .productItem, .productSalesDisplay{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .productItem{
+    width: 200px;
+  }
+  
+}

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node Backend.js",
+    "dev": "nodemon Backend.js"
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
+  }
+}

@@ -1,0 +1,196 @@
+.header{
+    background-color: black;
+    height: 100px;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    width: 100%;
+}
+
+.header img{
+    width: 50px;
+    padding-top: 12px;
+}
+
+.mainbody{
+    padding: 15px;
+    padding: 0px 20px 20px 20px;
+}
+
+.mainbody h2{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.inputDetails{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 27px;
+}
+
+.inputDetailsForCustomers input{
+    width: 290px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    margin-bottom: 27px;
+}
+
+.inputDetailsForCustomers select{
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    margin-bottom: 27px;
+}
+
+button{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    padding: 6px 15px 6px 15px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+.billHeader{
+    background-color: black;
+    padding: 8px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 33px;
+}
+
+.ownerDetails{
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.customerDetails{
+    display: grid;
+    grid-template-columns: 35% 65%;
+    padding-bottom: 30px;
+}
+
+.itemTable, .itemTable tr, .itemTable td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.itemDisplayTable, .itemDisplayTable tr, .itemDisplayTable td, .itemDisplayTable th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+.itemDisplayTable th{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.amtTable, .amtTable tr, .amtTable td{
+    border-top: 0px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.itemDisplayHeader{
+    text-align: center;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+}
+
+.signature{
+    text-align: right;
+    margin-right: 30px;
+    font-weight: bold;
+    margin-left: 200px;
+}
+
+.printBill{
+    visibility: hidden;
+}
+
+.footer{
+    margin-top: 220px;
+}
+
+.selectDateandBillNo{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .header{
+    width: 100%;
+    text-align: center;
+  }
+  .inputDetails, .inputDetailsForCustomers {
+    flex-direction: column;
+  }
+  .inputDetails select{
+    margin-bottom: 10px;
+  }
+  .inputDetails input{
+    margin-bottom: 10px;
+  }
+  .inputDetails button{
+    width: 100px;
+  }
+  .itemDisplayTable, .itemDisplayTable th, .itemDisplayTable td, .itemDisplayTable tr{
+    padding: 1px;
+  }
+  .footer{
+    margin-top: 150px;
+  }
+  .signature {
+  text-align: right;
+}
+
+.signature img {
+  width: 120px; /* optional */
+}
+}
+
+
+@media print{
+    @page{
+        size: A4;
+        margin: 20;
+    }
+    body * {
+    visibility: hidden;
+    }
+
+    .printBill, .printBill *{
+        visibility: visible;
+    }
+
+    .printBill{
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .billHeader, .itemDisplayHeader{
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+
+}
