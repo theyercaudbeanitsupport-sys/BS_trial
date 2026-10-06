@@ -6,7 +6,7 @@ import CourierAddr from "./js/courierAddr.js";
 
 function App() {
   return (
-    <BrowserRouter basename="/BS">
+    <BrowserRouter basename="/BS_trial">
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
