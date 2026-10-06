@@ -12,7 +12,7 @@ import PrintIcon from "@mui/icons-material/Print";
 
 const units = ["kg", "gms", "pcs"];
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://bs-trial.onrender.com";
 
 const msme = process.env.REACT_APP_MSME;
 

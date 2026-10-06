@@ -5,7 +5,7 @@ import { DatePicker } from "antd";
 import HomeIcon from "@mui/icons-material/Home";
 import { useEffect, useState } from "react";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://bs-trial.onrender.com";
 
 const STORE_CUSTOMER_VALUE = "store";
 
