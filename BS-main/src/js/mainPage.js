@@ -371,9 +371,9 @@ function MainPage() {
 
     const selectedStoreProduct =
         storeProducts.find(
-            (p) =>
-                String(p.product_id) ===
-                String(storeProduct)
+            (item) => item.item_type === "combo"
+                ? `combo-${item.combo_id}` === storeProduct
+                : `product-${item.product_id}` === storeProduct
         );
 
     // ============================================================
@@ -451,11 +451,17 @@ function MainPage() {
             id: Date.now(),
 
             productId:
-                Number(
-                    selectedStoreProduct.product_id
-                ),
+                selectedStoreProduct.item_type === "combo"
+                    ? null
+                    : Number(selectedStoreProduct.product_id),
+
+            comboId:
+                selectedStoreProduct.item_type === "combo"
+                    ? Number(selectedStoreProduct.combo_id)
+                    : null,
 
             product:
+                selectedStoreProduct.combo_name ||
                 selectedStoreProduct.product_name,
 
             quantity:
@@ -652,6 +658,9 @@ function MainPage() {
                 storeCart.map((item) => ({
                     productId:
                         item.productId,
+
+                    comboId:
+                        item.comboId,
 
                     quantity:
                         item.quantity,
@@ -1302,13 +1311,6 @@ function MainPage() {
                                                 `Combo ${p.combo_id}`;
                                         }
 
-                                        if (
-                                            p.pack_size_grams
-                                        ) {
-                                            displayName +=
-                                                ` (${p.pack_size_grams}g)`;
-                                        }
-
                                         return (
                                             <option
                                                 key={
@@ -1602,24 +1604,21 @@ function MainPage() {
                                     Select product
                                 </option>
 
-                                {storeProducts.map(
-                                    (product) => (
+                                {storeProducts.map((item) => {
+                                    const itemId =
+                                        item.item_type === "combo"
+                                            ? item.combo_id
+                                            : item.product_id;
 
+                                    return (
                                         <option
-                                            key={
-                                                product.product_id
-                                            }
-                                            value={
-                                                product.product_id
-                                            }
+                                            key={`${item.item_type}-${itemId}`}
+                                            value={`${item.item_type}-${itemId}`}
                                         >
-                                            {
-                                                product.product_name
-                                            }
+                                            {item.combo_name || item.product_name}
                                         </option>
-
-                                    )
-                                )}
+                                    );
+                                })}
 
                             </select>
 

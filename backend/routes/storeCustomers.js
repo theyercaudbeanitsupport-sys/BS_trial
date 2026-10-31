@@ -44,9 +44,39 @@ try {
     const result = await pool.query(`
         SELECT
             product_id,
-            product_name
-        FROM product
-        ORDER BY product_name
+            product_name,
+            combo_id,
+            combo_name,
+            item_type,
+            item_name
+        FROM (
+            SELECT
+                product_id,
+                product_name,
+                NULL AS combo_id,
+                NULL AS combo_name,
+                'product' AS item_type,
+                product_name AS item_name,
+                0 AS sort_group,
+                display_order AS sort_order
+            FROM product
+            WHERE display_order IS NOT NULL
+
+            UNION ALL
+
+            SELECT
+                NULL AS product_id,
+                NULL AS product_name,
+                combo_id,
+                combo_name,
+                'combo' AS item_type,
+                combo_name AS item_name,
+                1 AS sort_group,
+                display_order AS sort_order
+            FROM combo
+            WHERE display_order IS NOT NULL
+        ) AS store_items
+        ORDER BY sort_group, sort_order, item_name
     `);
 
     res.json(result.rows);
@@ -108,8 +138,7 @@ try {
     const result = await pool.query(
         `
         SELECT
-            p.product_id,
-            p.product_name,
+            COALESCE(p.product_name, c.combo_name) AS product_name,
             oi.unit,
             SUM(oi.quantity) AS total_quantity,
             SUM(oi.price) AS total_amount
@@ -119,8 +148,11 @@ try {
         INNER JOIN order_item oi
             ON o.order_id = oi.order_id
 
-        INNER JOIN product p
+        LEFT JOIN product p
             ON oi.product_id = p.product_id
+
+        LEFT JOIN combo c
+            ON oi.combo_id = c.combo_id
 
         WHERE o.store_customer_id IS NOT NULL
 
@@ -131,10 +163,12 @@ try {
         GROUP BY
             p.product_id,
             p.product_name,
+            c.combo_id,
+            c.combo_name,
             oi.unit
 
         ORDER BY
-            p.product_name,
+            product_name,
             oi.unit
         `,
         [
@@ -203,8 +237,11 @@ if (
 
 for (const item of items) {
 
+    const hasProduct = Boolean(item.productId);
+    const hasCombo = Boolean(item.comboId);
+
     if (
-        !item.productId ||
+        hasProduct === hasCombo ||
         item.quantity === undefined ||
         item.quantity === null ||
         Number(item.quantity) <= 0 ||
@@ -331,7 +368,6 @@ try {
             VALUES (
                 $1,
                 NULL,
-                NULL,
                 $2,
                 $3,
                 $4,
@@ -340,13 +376,17 @@ try {
             `,
             [
                 order.order_id,
-                Number(item.productId),
+                item.comboId
+                    ? Number(item.comboId)
+                    : null,
+                item.productId
+                    ? Number(item.productId)
+                    : null,
                 Number(item.quantity),
                 item.unit,
 
                 // Store line total price
-                Number(item.price) *
-                Number(item.quantity)
+                Number(item.price)
             ]
         );
     }
